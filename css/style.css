@@ -1,0 +1,223 @@
+
+
+/*adds animation to logo*/
+@keyframes logoGrow {
+    0% {
+      width: 25px;   /* Start with a small width */
+      opacity: 0;    /* Start fully transparent */
+    }
+    100% {
+      width: 475px;  /* Grow to the final width */
+      opacity: 1;    /* End fully opaque */
+    }
+  }
+  
+  /* Apply the animation to the logo element on page load */
+  #logo {
+    animation: logoGrow 5s forwards; /* Run for 5 seconds, and keep the final state */
+  }
+
+/* Use Poppins (with serif backup) and set a background image with a fallback background color*/
+
+body {
+    font-family: "Poppins", serif;
+    background-image: url("../images/concrete_seamless.png");
+    background-color: #f1f1f1;
+}
+
+/* Use flexbox on header elements*/
+
+header {
+    display: flex;
+    flex-direction: column; /*stack header children vertically*/
+    align-items: center; /*center items horizontally*/
+}
+
+/* Use flexbox on nav_links class, makes sure ONLY modify the class, not the individual items*/
+
+.nav_links {
+    display: flex;
+    flex-direction: column; /* Stack links vertically */
+}
+
+/* Ensures that navigation links retain the same color whether visited or not */
+
+.nav_links a:link, .nav_links a:visited {
+    color: inherit; 
+}
+
+/* Reintroduce hover and focus styling for the navigation links*/
+.nav_links a:hover, .nav_links a:focus {
+    color: #50C7C7;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+}
+
+/* Style header elements t hat are direct children of .card; Set background color, border, padding, and round the top corners*/
+
+.card > header {
+    background-color: #288088;
+    border: solid 2px #45ADAD;
+    padding: 20px 0;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+
+}
+
+/*Additional .card styling: Ensures that the entire card has matching rounded top corners and sets its flex properties*/
+
+.card  {
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    overflow: hidden; /*hides any overflow so that the white background doesn't show outside of the curved corners*/
+
+    /*flex properties*/
+    flex: 1 1 450px; /* flex-grow: 1, flex-shrink: 1, flex-basis: 450px */
+    max-width: 450px; 
+}
+
+/*Pricing container styling: centers the cards and allows wrapping*/
+
+.pricing {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style images within the .gallery class.with a solid 10px blue border , 10px margin on all four sides, and a fixed width of 300px.  */
+
+.gallery img {
+    border: 10px solid #50C7C7;
+    margin: 10px;
+    width: 300px;
+}
+
+/*set up .gallery as flex container*/
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+/* Media Query for screens wider than 900px */
+
+@media screen and (min-width: 900px) {
+
+    /*adjust header layout for wider screens: switching from column to row set up, spread items apart*/
+
+    header {
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row;
+    }
+
+    /*change navigation links layout to horizontal row*/
+
+    .nav_links {
+        flex-direction: row;
+    }
+
+    /*Adjust pricing container for larger screens: keeps items in a row, centers cards vertically, prevents wrapping*/
+
+    .pricing {
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: nowrap;
+    }
+
+    /*Set each card to a fixed width of 275px for larger screens*/
+
+    .card {
+        flex: 0 0 275px; /*fixed width: 275 px (no grow, no shrink*/
+        max-width: 275px;
+      }
+
+      /*Makes the header in the body at a fixed position so that it is always visible while scrolling*/
+
+      body > header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+      }
+
+      /*Adds a top padding to the main content so that the header does not overlap with it*/
+
+      main {
+        padding-top: 100px; 
+      }
+}
+
+/*Reduce motion for users with the "prefers-reduced-motion" setting turned on*/
+
+@media (prefers-reduced-motion: reduce) {
+    
+    #logo {
+      animation: none; /* Disable any animations for the logo */
+      transition: none; /* Disable transitions for the logo */
+    }
+
+}
+
+/* Print-specific styles*/
+
+@media print {
+
+    /*Change font to arial and remove background image*/
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-image: none;
+    }
+
+    /*Style navigation for print view, arrange items in a row with even spacing that stretches the entire width of the screen*/
+
+    nav,.nav_links {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+    }
+
+    /*Pricing container styling: aligns cards at bottom*/
+
+    .pricing {
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+    /*Card styling for print: set a max width, added a border*/
+
+    .card {
+        border: 2px solid #45ADDD;
+        max-width: 325px;
+    }
+
+    /*makes sure the gallery and gallery heading is not displayed when printing*/
+
+    .gallery {
+        display: none;
+    }
+
+    #gallery {
+        display: none;
+    }
+
+    /* Without using list-style, add a thumbs up emoji after the second list item in each card */
+
+    .card ul li:nth-child(2)::after {
+        content: " \1F44D"; /* Unicode thumbs up emoji */
+        margin-left: 0.5em; /* Add space between text and emoji */
+    }
+}
+
+
+
+
